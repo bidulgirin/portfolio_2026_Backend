@@ -1,12 +1,14 @@
 ﻿# 파일구조
 
+
+```text
  src/main/java/com/portfolio/chatbot
 ├─ ChatbotApplication.java
 ├─ config/
 │  ├─ WebConfig.java
-│  ├─ SecurityConfig.java            (선택)
+│  ├─ SecurityConfig.java            
 │  ├─ OpenAiConfig.java              (LLM 연동 설정)
-│  └─ JacksonConfig.java             (선택)
+│  └─ JacksonConfig.java             
 ├─ common/
 │  ├─ exception/
 │  │  ├─ GlobalExceptionHandler.java
@@ -36,11 +38,10 @@
 │  │  └─ ChatSessionRepository.java
 │  └─ service/
 │     └─ MemoryService.java
-└─ rag/                               (선택: 문서 기반 Q&A)
+└─ rag/                               (문서 기반 Q&A)
    ├─ service/
    │  ├─ Retriever.java              (유사도 검색)
    │  └─ RAGService.java             (검색+응답 생성)
    └─ domain/
       └─ DocumentChunk.java
-
 
