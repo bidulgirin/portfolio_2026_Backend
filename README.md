@@ -58,6 +58,13 @@ You can also set `app.dotenv.path` or `DOTENV_PATH` to point to a custom `.env` 
 docker compose up --build
 ```
 
+## Deploy (EC2 Docker)
+
+```bash
+# copy .env.example -> .env and fill OPENAI_API_KEY
+docker compose -f compose.prod.yaml --env-file .env up -d --build
+```
+
 ## API
 
 `POST /api/chat`
