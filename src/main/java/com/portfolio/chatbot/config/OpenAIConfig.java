@@ -6,20 +6,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestClient;
+import org.springframework.util.StringUtils;
 
 @Configuration
 public class OpenAIConfig {
 
     @Bean
     public RestClient openAiRestClient(
-            @Value("${openai.api-key}") String apiKey,
+            @Value("${openai.api-key:}") String apiKey,
             @Value("${openai.api-url}") String apiUrl
     ) {
-        // Build a dedicated RestClient instead of relying on an auto-configured RestClient.Builder.
-        return RestClient.builder()
+        RestClient.Builder builder = RestClient.builder()
                 .baseUrl(apiUrl)
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        if (StringUtils.hasText(apiKey)) {
+            builder.defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+        }
+
+        // Build a dedicated RestClient instead of relying on an auto-configured RestClient.Builder.
+        return builder.build();
     }
 }

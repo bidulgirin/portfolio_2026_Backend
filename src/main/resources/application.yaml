@@ -1,0 +1,15 @@
+﻿spring:
+  main:
+    lazy-initialization: true
+  application:
+    name: chatbot
+
+app:
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:8081,http://127.0.0.1:8081,https://staging.d2y4knmwkrsavb.amplifyapp.com}
+
+openai:
+  api-key: ${OPENAI_API_KEY:}
+  api-url: ${OPENAI_API_URL:https://api.openai.com/v1/chat/completions}
+  model: ${OPENAI_MODEL:gpt-3.5-turbo}
+  system-prompt: ${OPENAI_SYSTEM_PROMPT:}

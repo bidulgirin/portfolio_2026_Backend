@@ -1,0 +1,17 @@
+﻿name: chatbot
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-backend
+    ports:
+      - "3000:8080"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_API_URL: ${OPENAI_API_URL:-https://api.openai.com/v1/chat/completions}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-3.5-turbo}
+      OPENAI_SYSTEM_PROMPT: ${OPENAI_SYSTEM_PROMPT:-}
+      APP_CORS_ALLOWED_ORIGINS: ${APP_CORS_ALLOWED_ORIGINS:-http://localhost:8081,http://127.0.0.1:8081,https://staging.d2y4knmwkrsavb.amplifyapp.com}
+    restart: unless-stopped

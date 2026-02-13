@@ -1,14 +1,14 @@
-﻿# 파일구조
+﻿# Chatbot API
 
+## Structure
 
 ```text
- src/main/java/com/portfolio/chatbot
+src/main/java/com/portfolio/chatbot
 ├─ ChatbotApplication.java
 ├─ config/
-│  ├─ WebConfig.java
-│  ├─ SecurityConfig.java            
-│  ├─ OpenAiConfig.java              (LLM 연동 설정)
-│  └─ JacksonConfig.java             
+│  ├─ OpenAIConfig.java
+│  ├─ SwaggerConfig.java
+│  └─ WebConfig.java
 ├─ common/
 │  ├─ exception/
 │  │  ├─ GlobalExceptionHandler.java
@@ -18,30 +18,62 @@
 │  │  └─ ErrorResponse.java
 │  └─ util/
 │     └─ TimeUtil.java
-├─ chat/
-│  ├─ controller/
-│  │  └─ ChatController.java
-│  ├─ dto/
-│  │  ├─ ChatRequest.java
-│  │  └─ ChatResponse.java
-│  ├─ service/
-│  │  ├─ ChatService.java
-│  │  └─ PromptBuilder.java          (프롬프트/시스템메시지 구성)
-│  ├─ client/
-│  │  └─ LlmClient.java              (OpenAI/Claude 등 외부 API 호출)
-│  └─ domain/
-│     ├─ ChatMessage.java
-│     └─ ChatSession.java            (선택: 세션 기반)
-├─ memory/                           (선택: 대화 저장/검색)
-│  ├─ repository/
-│  │  ├─ ChatMessageRepository.java
-│  │  └─ ChatSessionRepository.java
-│  └─ service/
-│     └─ MemoryService.java
-└─ rag/                               (문서 기반 Q&A)
+└─ chat/
+   ├─ controller/
+   │  └─ ChatController.java
+   ├─ dto/
+   │  ├─ ChatRequest.java
+   │  └─ ChatResponse.java
    ├─ service/
-   │  ├─ Retriever.java              (유사도 검색)
-   │  └─ RAGService.java             (검색+응답 생성)
+   │  └─ ChatService.java
+   ├─ client/
+   │  └─ OpenAiClient.java
    └─ domain/
-      └─ DocumentChunk.java
+      └─ ChatMessage.java
+```
 
+## Environment
+
+Required:
+- `OPENAI_API_KEY`
+
+Optional:
+- `OPENAI_API_URL` (default: `https://api.openai.com/v1/chat/completions`)
+- `OPENAI_MODEL` (default: `gpt-3.5-turbo`)
+- `OPENAI_SYSTEM_PROMPT`
+- `APP_CORS_ALLOWED_ORIGINS` (default: `http://localhost:8081,http://127.0.0.1:8081`)
+
+`.env` in the working directory is automatically loaded at startup.
+You can also set `app.dotenv.path` or `DOTENV_PATH` to point to a custom `.env` location.
+
+## Run (local)
+
+```bash
+./gradlew bootRun
+```
+
+## Run (Docker)
+
+```bash
+docker compose up --build
+```
+
+## API
+
+`POST /api/chat`
+
+Request body:
+
+```json
+{
+  "message": "Hello"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Hi! How can I help you?"
+}
+```

@@ -35,5 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
-*.yaml
 .env
+application-local.yaml
+application-prod.yaml
