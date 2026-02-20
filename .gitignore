@@ -38,3 +38,4 @@ out/
 .env
 application-local.yaml
 application-prod.yaml
+logs/

@@ -1,5 +1,6 @@
 package com.portfolio.chatbot.chat.service;
 
+import com.portfolio.chatbot.chat.audit.ChatAuditService;
 import com.portfolio.chatbot.chat.client.OpenAiClient;
 import com.portfolio.chatbot.chat.dto.OpenAiResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +13,15 @@ import org.springframework.stereotype.Service;
 public class ChatService {
     private static final Logger log = LoggerFactory.getLogger(ChatService.class);
     private final OpenAiClient openAiClient;
+    private final ChatAuditService chatAuditService;
 
     /**
      * 클라이언트 질문을 받아 OpenAI 응답 텍스트 반환
      */
-    public String getAnswer(String question) {
+    public String getAnswer(String question, String clientIp) {
         int questionLength = (question != null) ? question.length() : 0;
         log.info("ChatService.getAnswer called. questionLength={}", questionLength);
+        chatAuditService.recordUserMessage(question, clientIp);
         OpenAiResponse res = openAiClient.getChatCompletion(question);
 
         String content =
