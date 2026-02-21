@@ -16,9 +16,11 @@ public class OpenAiRequest {
 
     // 메세지 리스트
     private List<ChatMessage> messages;
+    private boolean store;
 
-    public OpenAiRequest(String model, List<ChatMessage> messages) {
+    public OpenAiRequest(String model, List<ChatMessage> messages, boolean store) {
         this.model = model;
         this.messages = messages;
+        this.store = store;
     }
 }

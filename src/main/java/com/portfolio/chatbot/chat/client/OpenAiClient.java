@@ -59,7 +59,7 @@ public class OpenAiClient {
                 )
                 : List.of(new ChatMessage(ROLE_USER, question, null));
 
-        OpenAiRequest request = new OpenAiRequest(model, messages);
+        OpenAiRequest request = new OpenAiRequest(model, messages, true);
 
         try {
             OpenAiResponse response = openAiRestClient.post()
